@@ -1,17 +1,10 @@
 package facades;
 
-import dao.CouponDBDAO;
-import dao.CustomerDBDAO;
-import entities.Category;
-import entities.Coupon;
-import entities.Customer;
-import exceptions.CouponException;
-import exceptions.NotExistsException;
-import exceptions.NotLoggedInException;
-
+import dao.*;
+import entities.*;
+import exceptions.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CustomerFacade extends ClientFacade {
 
@@ -23,6 +16,10 @@ public class CustomerFacade extends ClientFacade {
         isLoggedIn = false;
     }
 
+    /**
+     * A method that checks if the email and password match the database
+     * and if they are it logs in to that account
+     */
     @Override
     public boolean login(String email, String password){
         isLoggedIn = customerDAO.isCustomerExists(email,password);
@@ -32,6 +29,10 @@ public class CustomerFacade extends ClientFacade {
         return isLoggedIn;
     }
 
+    /**
+     * A method that checks all the criteria to purchase a coupon and then
+     * if everything is ok adds a purchase to the database
+     */
     public void purchaseCoupon(Coupon coupon) throws NotLoggedInException,NotExistsException, CouponException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -56,6 +57,10 @@ public class CustomerFacade extends ClientFacade {
         couponDAO.updateCoupon(coupon);
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     */
     public List<Coupon> getCustomerCoupons() throws NotLoggedInException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -63,6 +68,9 @@ public class CustomerFacade extends ClientFacade {
         return customerDAO.getCustomerCoupons(customerId);
     }
 
+    /**
+     * Same method as the one above just with a specific filter
+     */
     public List<Coupon> getCouponsByCategory(Category category) throws NotLoggedInException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -76,6 +84,9 @@ public class CustomerFacade extends ClientFacade {
         return categoryCoupons;
     }
 
+    /**
+     * Same method as the one above just with a specific filter
+     */
     public List<Coupon> getCouponsByPrice(double price) throws NotLoggedInException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -89,6 +100,9 @@ public class CustomerFacade extends ClientFacade {
         return priceCoupons;
     }
 
+    /**
+     * return the info of the customer logged in
+     */
     public Customer getInfo() throws NotLoggedInException{
         if (!isLoggedIn){
             throw new NotLoggedInException();

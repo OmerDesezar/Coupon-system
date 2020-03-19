@@ -1,12 +1,7 @@
 package test;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import entities.*;
-import exceptions.AlreadyExistsException;
-import exceptions.NotLoggedInException;
-import facades.AdminFacade;
-import facades.CompanyFacade;
-import facades.CustomerFacade;
+import facades.*;
 import job.CouponExpirationDailyJob;
 import loginManager.LoginManager;
 import pool.ConnectionPool;
@@ -57,8 +52,8 @@ public class Test {
             companyFacade.getCompanyCoupons().forEach(System.out::println);
             System.out.println("all company coupons with food category: ");
             companyFacade.getCouponsByCategory(Category.FOOD).forEach(System.out::println);
-            System.out.println("all company coupons under the price of 300: ");
-            companyFacade.getCouponsByPrice(300).forEach(System.out::println);
+            System.out.println("all company coupons under the price of 200: ");
+            companyFacade.getCouponsByPrice(200).forEach(System.out::println);
 
             CustomerFacade customerFacade = (CustomerFacade) loginManager.login("dash@gmail.com", "1234", ClientType.CUSTOMER);
             customerFacade.purchaseCoupon(coupon);

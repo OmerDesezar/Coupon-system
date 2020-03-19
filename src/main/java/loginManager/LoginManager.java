@@ -21,6 +21,10 @@ public class LoginManager {
 
     }
 
+    /**
+     * A method that lets every client log in with a specific
+     * type criteria and log in parameters
+     */
     public ClientFacade login(String email, String password, ClientType clientType){
         ClientFacade clientFacade = null;
         switch (clientType){

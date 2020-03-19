@@ -11,6 +11,10 @@ import java.time.LocalDate;
 public class CompanyDBDAO implements CompanyDAO {
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
+    /**
+     * A method that accepts two parameters and compares
+     * them to the database to see if the company exists there
+     */
     @Override
     public boolean isCompanyExists(String email, String password) {
         Connection connection = connectionPool.getConnection();
@@ -31,6 +35,10 @@ public class CompanyDBDAO implements CompanyDAO {
         return isExists;
     }
 
+    /**
+     * A method that accepts id parameter to get all
+     * the coupons from the company with that id
+     */
     public List<Coupon> getCompanyCoupons(long companyID) {
         Connection connection = connectionPool.getConnection();
         List<Coupon> couponList = new ArrayList<>();
@@ -59,6 +67,10 @@ public class CompanyDBDAO implements CompanyDAO {
         return couponList;
     }
 
+    /**
+     *A method that gets an id parameter and returns
+     *the company with that id
+     */
     @Override
     public Company getCompanyByID(long companyID){
         Company company = null;
@@ -82,6 +94,10 @@ public class CompanyDBDAO implements CompanyDAO {
         return company;
     }
 
+    /**
+     * A method that returns a list with all the
+     * companies from the database
+     */
     @Override
     public List<Company> getAllCompanies() {
         List<Company> companyList = new ArrayList<>();
@@ -105,6 +121,11 @@ public class CompanyDBDAO implements CompanyDAO {
         }
         return companyList;
     }
+
+    /**
+     * A method that gets a string parameter and returns
+     * the company that matches it from the database
+     */
     public Company getByEmail(String email){
         Company company = null;
         Connection connection = connectionPool.getConnection();
@@ -127,6 +148,10 @@ public class CompanyDBDAO implements CompanyDAO {
         return company;
     }
 
+    /**
+     * A method that gets a string parameter and returns
+     * the company that matches it from the database
+     */
     public Company getByName(String name){
         Company company = null;
         Connection connection = connectionPool.getConnection();
@@ -149,6 +174,10 @@ public class CompanyDBDAO implements CompanyDAO {
         return company;
     }
 
+    /**
+     * A method that gets a company and adds it
+     * to the database, and then adds the id to the object
+     */
     @Override
     public Company addCompany(Company company) {
         Connection connection = connectionPool.getConnection();
@@ -171,6 +200,10 @@ public class CompanyDBDAO implements CompanyDAO {
         return company;
     }
 
+    /**
+     * A method that gets a company and updates
+     * the database to match it
+     */
     @Override
     public Company updateCompany(Company company){
         Connection connection = connectionPool.getConnection();
@@ -188,6 +221,10 @@ public class CompanyDBDAO implements CompanyDAO {
         return company;
     }
 
+    /**
+     * A method that gets an id as a parameter and
+     * deletes the company with that id from the database
+     */
     @Override
     public Company deleteCompany(long companyID){
         Company company = getCompanyByID(companyID);
@@ -204,6 +241,10 @@ public class CompanyDBDAO implements CompanyDAO {
         return company;
     }
 
+    /**
+     *A method that helps to convert the category
+     * from a number(in the database) to an enum for the java object.
+     */
     private Category getCategoryByID(long categoryID){
         Connection connection = connectionPool.getConnection();
         String name = "";

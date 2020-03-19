@@ -1,20 +1,19 @@
 package dao;
 
-import entities.Category;
-import entities.Coupon;
-import entities.Customer;
-import exceptions.AlreadyExistsException;
-import exceptions.NotExistsException;
+import entities.*;
 import pool.ConnectionPool;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CustomerDBDAO implements CustomerDAO {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
 
+    /**
+     * A method that accepts two parameters and compares
+     * them to the database to see if the customer exists there
+     */
     @Override
     public boolean isCustomerExists(String email, String password) {
         Connection connection = connectionPool.getConnection();
@@ -35,6 +34,10 @@ public class CustomerDBDAO implements CustomerDAO {
         return isExists;
     }
 
+    /**
+     * A method that accepts id parameter to get all
+     * the coupons the have been purchased by the customer with that id
+     */
     public List<Coupon> getCustomerCoupons(long customerID){
         Connection connection = connectionPool.getConnection();
         List<Coupon> couponList = new ArrayList<>();
@@ -65,6 +68,10 @@ public class CustomerDBDAO implements CustomerDAO {
         return couponList;
     }
 
+    /**
+     *A method that gets an id parameter and returns
+     *the customer with that id
+     */
     @Override
     public Customer getCustomerByID(long customerID){
         Customer customer = null;
@@ -89,6 +96,10 @@ public class CustomerDBDAO implements CustomerDAO {
         return customer;
     }
 
+    /**
+     * A method that returns a list with all the
+     * customers from the database
+     */
     @Override
     public List<Customer> getAllCustomers() {
         List<Customer> customerList = new ArrayList<>();
@@ -114,6 +125,10 @@ public class CustomerDBDAO implements CustomerDAO {
         return customerList;
     }
 
+    /**
+     * A method that gets a string parameter and returns
+     * the customer that matches it from the database
+     */
     public Customer getByEmail(String email) {
         Customer customer = null;
         Connection connection = connectionPool.getConnection();
@@ -137,6 +152,10 @@ public class CustomerDBDAO implements CustomerDAO {
         return customer;
     }
 
+    /**
+     * A method that gets a string parameter and returns
+     * the customer that matches it from the database
+     */
     public Customer getByName(String firstName,String lastName){
         Customer customer = null;
         Connection connection = connectionPool.getConnection();
@@ -160,6 +179,10 @@ public class CustomerDBDAO implements CustomerDAO {
         return customer;
     }
 
+    /**
+     * A method that gets a customer and adds it
+     * to the database, and then adds the id to the object
+     */
     @Override
     public Customer addCustomer(Customer customer){
         Connection connection = connectionPool.getConnection();
@@ -183,6 +206,10 @@ public class CustomerDBDAO implements CustomerDAO {
         return customer;
     }
 
+    /**
+     * A method that gets a customer and updates
+     * the database to match it
+     */
     @Override
     public Customer updateCustomer(Customer customer)  {
         Connection connection = connectionPool.getConnection();
@@ -202,6 +229,10 @@ public class CustomerDBDAO implements CustomerDAO {
         return customer;
     }
 
+    /**
+     * A method that gets an id as a parameter and
+     * deletes the customer with that id from the database
+     */
     @Override
     public Customer deleteCustomer(long customerID) {
         Customer customer = getCustomerByID(customerID);
@@ -217,6 +248,11 @@ public class CustomerDBDAO implements CustomerDAO {
         }
         return customer;
     }
+
+    /**
+     *A method that helps to convert the category
+     * from a number(in the database) to an enum for the java object.
+     */
     private Category getCategoryByID(long categoryID){
         Connection connection = connectionPool.getConnection();
         String name = "";

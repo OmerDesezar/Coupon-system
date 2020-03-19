@@ -1,7 +1,6 @@
 package dao;
 
-import entities.Category;
-import entities.Coupon;
+import entities.*;
 import pool.ConnectionPool;
 
 import java.sql.*;
@@ -12,6 +11,10 @@ import java.util.List;
 public class CouponDBDAO implements CouponDAO {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
 
+    /**
+     * A method that accepts three parameters and compares
+     * them to the database to see if the coupon exists there
+     */
     public boolean isCouponExists(Category category, String title, String description){
         Connection connection = connectionPool.getConnection();
         boolean exists = false;
@@ -32,6 +35,10 @@ public class CouponDBDAO implements CouponDAO {
         return exists;
     }
 
+    /**
+     *A method that gets an id parameter and returns
+     *the coupon with that id
+     */
     @Override
     public Coupon getCouponByID(long couponID) {
         Connection connection = connectionPool.getConnection();
@@ -60,7 +67,11 @@ public class CouponDBDAO implements CouponDAO {
         return coupon;
     }
 
-    public Category getCategoryByID(long categoryID){
+    /**
+     *A method that helps to convert the category
+     * from a number(in the database) to an enum for the java object.
+     */
+    private Category getCategoryByID(long categoryID){
         Connection connection = connectionPool.getConnection();
         String name = "";
         String sql = "SELECT NAME FROM CATEGORIES WHERE ID = ?";
@@ -78,7 +89,11 @@ public class CouponDBDAO implements CouponDAO {
         return Category.valueOf(name);
     }
 
-    public long getCategoryID(Category category){
+    /**
+     *A method that helps to convert the category
+     * from an enum to a number for the database.
+     */
+    private long getCategoryID(Category category){
         Connection connection = connectionPool.getConnection();
         long id = 0;
         String sql = "SELECT ID FROM CATEGORIES WHERE NAME = ?";
@@ -96,6 +111,10 @@ public class CouponDBDAO implements CouponDAO {
         return id;
     }
 
+    /**
+     * A method that gets a coupon and adds it
+     * to the database, and then adds the id to the object
+     */
     @Override
     public Coupon addCoupon(Coupon coupon){
         Connection connection = connectionPool.getConnection();
@@ -125,6 +144,10 @@ public class CouponDBDAO implements CouponDAO {
         return coupon;
     }
 
+    /**
+     * A method that returns a list with all the
+     * coupons from the database
+     */
     @Override
     public List<Coupon> getAllCoupons() {
         List<Coupon> coupons = new ArrayList<>();
@@ -153,6 +176,10 @@ public class CouponDBDAO implements CouponDAO {
         return coupons;
     }
 
+    /**
+     * A method that gets a coupon and updates
+     * the database to match it
+     */
     @Override
     public Coupon updateCoupon(Coupon coupon) {
         Connection connection = connectionPool.getConnection();
@@ -176,6 +203,10 @@ public class CouponDBDAO implements CouponDAO {
         return coupon;
     }
 
+    /**
+     * A method that gets an id as a parameter and
+     * deletes the coupon with that id from the database
+     */
     @Override
     public Coupon deleteCoupon(long couponID) {
         Coupon coupon = getCouponByID(couponID);
@@ -192,6 +223,11 @@ public class CouponDBDAO implements CouponDAO {
         return coupon;
     }
 
+    /**
+     * A method that gets two id parameters and
+     * saves them together as a purchased coupon by
+     * a customer
+     */
     @Override
     public void addCouponPurchase(long customerID, long couponID) {
         Connection connection = connectionPool.getConnection();
@@ -207,6 +243,11 @@ public class CouponDBDAO implements CouponDAO {
         }
     }
 
+    /**
+     * A method that gets two id parameters and
+     * deletes them from being a purchased coupon by
+     * a customer
+     */
     @Override
     public void deleteCouponPurchase(long customerID, long couponID){
         Connection connection = connectionPool.getConnection();
@@ -222,6 +263,10 @@ public class CouponDBDAO implements CouponDAO {
         }
     }
 
+    /**
+     * A method that gets an id parameter and
+     * deletes all the purchased with this id
+     */
     public void deleteCouponPurchaseByCouponID(long couponID){
         Connection connection = connectionPool.getConnection();
         String sql = "DELETE FROM CUSTOMERS_VS_COUPONS WHERE COUPON_ID = ?";

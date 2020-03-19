@@ -1,14 +1,8 @@
 package facades;
 
-import dao.CompanyDBDAO;
-import dao.CustomerDBDAO;
-import entities.Company;
-import entities.Coupon;
-import entities.Customer;
-import exceptions.AlreadyExistsException;
-import exceptions.NotExistsException;
-import exceptions.NotLoggedInException;
-
+import dao.*;
+import entities.*;
+import exceptions.*;
 import java.util.List;
 
 public class AdminFacade extends ClientFacade {
@@ -18,6 +12,11 @@ public class AdminFacade extends ClientFacade {
         customerDAO = new CustomerDBDAO();
         isLoggedIn = false;
     }
+
+    /**
+     * A method that checks if the email and password match the database
+     * and if they are it logs in to that account
+     */
     @Override
     public boolean login(String email, String password){
         String adminEmail = "admin@admin.com";
@@ -26,6 +25,10 @@ public class AdminFacade extends ClientFacade {
         return isLoggedIn;
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     */
     public Company addCompany(Company company) throws NotLoggedInException, AlreadyExistsException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -37,6 +40,10 @@ public class AdminFacade extends ClientFacade {
         return company;
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     */
     public void updateCompany(Company company) throws NotLoggedInException, NotExistsException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -47,6 +54,11 @@ public class AdminFacade extends ClientFacade {
         company = companyDAO.updateCompany(company);
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     * also deletes all coupons from that company and all coupon purchases related
+     */
     public void deleteCompany(long companyID) throws NotLoggedInException, NotExistsException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -63,6 +75,10 @@ public class AdminFacade extends ClientFacade {
         companyDAO.deleteCompany(companyID);
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     */
     public List<Company> getAllCompanies() throws NotLoggedInException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -70,6 +86,10 @@ public class AdminFacade extends ClientFacade {
         return companyDAO.getAllCompanies();
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     */
     public Company getCompanyByID(long companyID) throws NotLoggedInException, NotExistsException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -80,6 +100,10 @@ public class AdminFacade extends ClientFacade {
         return companyDAO.getCompanyByID(companyID);
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     */
     public Customer addCustomer(Customer customer) throws NotLoggedInException, AlreadyExistsException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -91,6 +115,10 @@ public class AdminFacade extends ClientFacade {
         return customer;
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     */
     public void updateCustomer(Customer customer) throws NotLoggedInException, NotExistsException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -101,6 +129,11 @@ public class AdminFacade extends ClientFacade {
         customer = customerDAO.updateCustomer(customer);
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     * also deletes all coupons purchased by that customer from the database
+     */
     public void deleteCustomer(long customerId)throws NotLoggedInException, NotExistsException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -115,6 +148,10 @@ public class AdminFacade extends ClientFacade {
         customerDAO.deleteCustomer(customerId);
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     */
     public List<Customer> getAllCustomers()throws NotLoggedInException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
@@ -122,6 +159,10 @@ public class AdminFacade extends ClientFacade {
         return customerDAO.getAllCustomers();
     }
 
+    /**
+     * Same method from dbdao just with
+     * some logic that might throw exceptions
+     */
     public Customer getCustomerByID(long customerID)throws NotLoggedInException, NotExistsException{
         if (!isLoggedIn){
             throw new NotLoggedInException();
