@@ -96,7 +96,7 @@ public class AdminFacade extends ClientFacade {
             throw new NotLoggedInException();
         }
         if (customerDAO.getCustomerByID(customer.getId()) == null){
-            throw new NotExistsException(String.format("There is no customer with the id %s", customer.getId()));
+            throw new NotExistsException(String.format("There is no customer with the id %d", customer.getId()));
         }
         customer = customerDAO.updateCustomer(customer);
     }
@@ -106,7 +106,7 @@ public class AdminFacade extends ClientFacade {
             throw new NotLoggedInException();
         }
         if (customerDAO.getCustomerByID(customerId) == null){
-            throw new NotExistsException(String.format("There is no customer with the id %s", customerId));
+            throw new NotExistsException(String.format("There is no customer with the id %d", customerId));
         }
         List<Coupon> toDelete = customerDAO.getCustomerCoupons(customerId);
         for (Coupon coupon : toDelete){
@@ -127,7 +127,7 @@ public class AdminFacade extends ClientFacade {
             throw new NotLoggedInException();
         }
         if (customerDAO.getCustomerByID(customerID) == null){
-            throw new NotExistsException(String.format("There is no customer with the id %s", customerID));
+            throw new NotExistsException(String.format("There is no customer with the id %d", customerID));
         }
         return customerDAO.getCustomerByID(customerID);
     }

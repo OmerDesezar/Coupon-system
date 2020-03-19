@@ -54,7 +54,7 @@ public class CompanyFacade extends ClientFacade {
             throw new NotLoggedInException();
         }
         if (couponDAO.getCouponByID(coupon.getId()) == null){
-            throw new NotExistsException(String.format("A coupon with the id %d doesnt exist",coupon.getId()));
+            throw new NotExistsException(String.format("There is no coupon with the id %d",coupon.getId()));
         }
         coupon = couponDAO.updateCoupon(coupon);
     }
@@ -64,7 +64,7 @@ public class CompanyFacade extends ClientFacade {
             throw new NotLoggedInException();
         }
         if (couponDAO.getCouponByID(couponId) == null){
-            throw new NotExistsException(String.format("A coupon with the id %d doesnt exist",couponId));
+            throw new NotExistsException(String.format("There is no coupon with the id %d",couponId));
         }
         for (Customer customer : customerDAO.getAllCustomers()){
             couponDAO.deleteCouponPurchase(customer.getId(),couponId);

@@ -37,7 +37,7 @@ public class CustomerFacade extends ClientFacade {
             throw new NotLoggedInException();
         }
         if (couponDAO.getCouponByID(coupon.getId()) == null){
-            throw new NotExistsException("The coupon you wish to buy doesnt exist");
+            throw new NotExistsException(String.format("There is no coupon with the id %d",coupon.getId()));
         }
         if (coupon.getAmount() == 0){
             throw new CouponException("There are no more coupons of that kind left");
